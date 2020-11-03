@@ -3,6 +3,8 @@ module.exports = {
     title: `Ethirajulu Sukumar`,
     description: `Full stack web developer`,
     author: `@ethi`,
+    linkedIn: "https://www.linkedin.com/in/ethirajulu-sukumar-261723155/",
+    github: "https://github.com/Ethirajulu",
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
@@ -24,9 +26,10 @@ module.exports = {
         background_color: `#663399`,
         theme_color: `#663399`,
         display: `minimal-ui`,
-        icon: `src/images/gatsby-icon.png`, // This path is relative to the root of the site.
+        icon: `src/images/app-icon.png`, // This path is relative to the root of the site.
       },
     },
+    "gatsby-plugin-offline",
     {
       resolve: "gatsby-background-image",
       options: {

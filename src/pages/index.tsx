@@ -67,8 +67,8 @@ const Home: FC<PageProps> = () => {
               </AnimatePresence>
               <MediaHolder>
                 <Space size={50}>
-                  <LinkedIn image={linkedIn} />
-                  <Github image={github} />
+                  <LinkedIn image={linkedIn} iconOf="linkedIn" />
+                  <Github image={github} iconOf="github" />
                 </Space>
               </MediaHolder>
             </CardContent>
