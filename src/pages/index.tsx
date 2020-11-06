@@ -4,7 +4,8 @@ import { graphql, PageProps, useStaticQuery } from "gatsby"
 import { Col, message, Row, Space } from "antd"
 import { DownCircleOutlined, UpCircleOutlined } from "@ant-design/icons"
 import styled from "styled-components"
-import { AnimatePresence, motion } from "framer-motion"
+import { motion } from "framer-motion"
+import Img from "gatsby-image"
 import MediaImage from "../components/MediaImage"
 
 import SEO from "../components/seo"
@@ -23,9 +24,15 @@ const Home: FC<PageProps> = () => {
     return <div>Picture not found</div>
   }
 
-  const cardVariants = {
-    open: { height: "35vh" },
-    close: { height: "20vh" },
+  const aboutVariants = {
+    open: {
+      height: "auto",
+      opacity: 1,
+    },
+    close: {
+      height: "0px",
+      opacity: 0,
+    },
   }
 
   return (
@@ -33,15 +40,52 @@ const Home: FC<PageProps> = () => {
       {screen.xs ? (
         <BackgroundImageStyled fluid={images.profile_pic.childImageSharp.fluid}>
           <SEO title="Home" />
-          <Card
-            animate={isOpen ? "open" : "close"}
-            variants={cardVariants}
-            transition={{ duration: 0.5 }}
-          >
+          <Card>
             <CardContent>
               <Row>
                 <Col span={22}>
+                  <Name isXs>ETHIRAJULU SUKUMAR</Name>
+                  <Occupation isXs>Full stack developer, TN, India</Occupation>
+                </Col>
+                <IconCol isXs span={2}>
+                  {!isOpen ? (
+                    <UpIcon isXs onClick={() => setIsOpen(true)} />
+                  ) : (
+                    <DownIcon isXs onClick={() => setIsOpen(false)} />
+                  )}
+                </IconCol>
+              </Row>
+              <About
+                isXs
+                animate={isOpen ? "open" : "close"}
+                variants={aboutVariants}
+                transition={{ duration: 0.5 }}
+              >
+                I am a full stack web developer with 5+ years of experience in
+                developing high preferment and user friendly web and mobile
+                applications.
+              </About>
+              <MediaHolder isXs>
+                <Space size={50}>
+                  <LinkedIn isXs image={linkedIn} iconOf="linkedIn" />
+                  <Github isXs image={github} iconOf="github" />
+                </Space>
+              </MediaHolder>
+            </CardContent>
+          </Card>
+        </BackgroundImageStyled>
+      ) : (
+        <Container>
+          <Col span={10}>
+            <ImgDesk fluid={images.profile_pic.childImageSharp.fluid} />
+          </Col>
+          <Col span={14}>
+            <GreyContainer />
+            <GradientContainer>
+              <AboutRowDesk>
+                <Col span={22}>
                   <Name>ETHIRAJULU SUKUMAR</Name>
+                  <Occupation>Full stack developer, TN, India</Occupation>
                 </Col>
                 <IconCol span={2}>
                   {!isOpen ? (
@@ -50,32 +94,16 @@ const Home: FC<PageProps> = () => {
                     <DownIcon onClick={() => setIsOpen(false)} />
                   )}
                 </IconCol>
-              </Row>
-              <Occupation>Full stack developer, TN, India</Occupation>
-              <AnimatePresence>
-                {isOpen && (
-                  <About
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                  >
-                    I am a full stack web developer with 5+ years of experience
-                    in developing high preferment and user friendly web and
-                    mobile applications.
-                  </About>
-                )}
-              </AnimatePresence>
+              </AboutRowDesk>
               <MediaHolder>
-                <Space size={50}>
+                <Space size={40}>
                   <LinkedIn image={linkedIn} iconOf="linkedIn" />
                   <Github image={github} iconOf="github" />
                 </Space>
               </MediaHolder>
-            </CardContent>
-          </Card>
-        </BackgroundImageStyled>
-      ) : (
-        <p>You are not on mobile</p>
+            </GradientContainer>
+          </Col>
+        </Container>
       )}
     </>
   )
@@ -105,9 +133,8 @@ const BackgroundImageStyled = styled(BackgroundImage)`
 
 const Card = styled(motion.div)`
   position: absolute;
-  height: 20vh;
   width: 100vw;
-  bottom: 20px;
+  bottom: 3vh;
 `
 
 const CardContent = styled.div`
@@ -120,11 +147,12 @@ const CardContent = styled.div`
   );
   border-radius: 5px;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  padding-bottom: 10px;
 `
-const Name = styled.p`
+const Name = styled.p<{ isXs?: boolean }>`
   padding-top: 10px;
-  padding-left: 13px;
-  font-size: 17px;
+  padding-left: ${props => (props.isXs ? "13px" : "19%")};
+  font-size: ${props => (props.isXs ? "5vw" : "1.5vw")};
   font-family: "Quicksand", sans-serif;
   color: white;
   margin: 0px;
@@ -132,36 +160,36 @@ const Name = styled.p`
 
 const IconCol = styled(Col)`
   text-align: right;
-  padding-right: 5px;
-  padding-top: 1px;
+  padding-right: ${props => (props.isXs ? "10px" : "10px")};
+  padding-top: ${props => (props.isXs ? "2px" : "10px")};
 `
 
 const UpIcon = styled(UpCircleOutlined)`
-  font-size: 15px;
+  font-size: ${props => (props.isXs ? "3vw" : "1.1vw")}; ;
 `
 
 const DownIcon = styled(DownCircleOutlined)`
-  font-size: 15px;
+  font-size: ${props => (props.isXs ? "4vw" : "1.3vw")}; ;
 `
 
-const Occupation = styled.p`
+const Occupation = styled.p<{ isXs?: boolean }>`
   font-family: "Nunito", sans-serif;
-  font-size: 12px;
+  font-size: ${props => (props.isXs ? "3vw" : "1vw")};
   color: white;
-  padding-left: 13px;
+  padding-left: ${props => (props.isXs ? "14px" : "19.2%")};
 `
 
 const About = styled(motion.p)`
   font-family: "Montserrat", sans-serif;
+  font-size: 4vw;
   padding-left: 15px;
   padding-right: 15px;
   color: white;
 `
 
-const MediaHolder = styled.div`
-  position: absolute;
-  bottom: 1vh;
-  left: 35vw;
+const MediaHolder = styled.div<{ isXs?: boolean }>`
+  display: flex;
+  justify-content: center;
 `
 
 const LinkedIn = styled(MediaImage)`
@@ -170,6 +198,44 @@ const LinkedIn = styled(MediaImage)`
 
 const Github = styled(MediaImage)`
   border-radius: 50%;
+`
+
+const Container = styled(Row)`
+  height: 100%;
+  padding-top: 12vh;
+  padding-bottom: 9vh;
+  padding-left: 18vw;
+  padding-right: 22vw;
+`
+const ImgDesk = styled(Img)`
+  height: 100%;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+`
+const GreyContainer = styled(Row)`
+  height: 67vh;
+  margin-top: 3vh;
+  background-color: #c4c4c4;
+  border-top-right-radius: 5px;
+`
+
+const GradientContainer = styled(Row)`
+  position: absolute;
+  height: 25vh;
+  /* height: 59vh; */
+  bottom: 4vh;
+  width: 37vw;
+  right: 4vw;
+  background-image: linear-gradient(
+    rgba(255, 120, 0, 0.7),
+    rgba(255, 0, 0, 0.7)
+  );
+  border-radius: 5px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  z-index: 5;
+`
+const AboutRowDesk = styled(Row)`
+  width: 100%;
+  height: 10vh;
 `
 
 export default Home
