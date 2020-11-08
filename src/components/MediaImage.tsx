@@ -1,8 +1,10 @@
-import React from "react"
+import React, { FC } from "react"
 import { graphql, useStaticQuery } from "gatsby"
 import Img from "gatsby-image"
 
-export default ({ className, image, iconOf }) => {
+type MediaImageType = { className?: string; image: any; iconOf: string }
+
+const MediaImage: FC<MediaImageType> = ({ className, image, iconOf }) => {
   const { site } = useStaticQuery(
     graphql`
       query {
@@ -38,3 +40,5 @@ export const query = graphql`
     }
   }
 `
+
+export default MediaImage
