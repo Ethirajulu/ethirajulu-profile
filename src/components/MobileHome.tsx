@@ -2,7 +2,7 @@ import React, { FC } from "react"
 import styled from "styled-components"
 import BackgroundImage from "gatsby-background-image"
 import { DownCircleOutlined, UpCircleOutlined } from "@ant-design/icons"
-import { Col, Row, Space } from "antd"
+import { Space } from "antd"
 import { motion } from "framer-motion"
 
 import SEO from "./seo"
@@ -37,21 +37,10 @@ const MobileHome: FC<MobileHomeType> = ({
     <BackgroundImageStyled fluid={profileImg}>
       <SEO title="Home" />
       <Card>
-        <CardContent>
-          <Row>
-            <Col span={22}>
-              <Name>ETHIRAJULU SUKUMAR</Name>
-              <Occupation>Full stack developer, TN, India</Occupation>
-            </Col>
-            <IconCol span={2}>
-              {!isOpen ? (
-                <UpIcon onClick={() => setIsOpen(true)} />
-              ) : (
-                <DownIcon onClick={() => setIsOpen(false)} />
-              )}
-            </IconCol>
-          </Row>
-          <About
+        <Details>
+          <Name>ETHIRAJULU SUKUMAR</Name>
+          <Occupation>Full stack developer, TN, India</Occupation>
+          <Description
             animate={isOpen ? "open" : "close"}
             variants={aboutVariants}
             transition={{ duration: 0.5 }}
@@ -59,14 +48,19 @@ const MobileHome: FC<MobileHomeType> = ({
             I am a full stack web developer with 5+ years of experience in
             developing high preferment and user friendly web and mobile
             applications.
-          </About>
-          <MediaHolder>
-            <Space size={50}>
-              <MediaIcon image={linkedIn} iconOf="linkedIn" />
-              <MediaIcon image={github} iconOf="github" />
-            </Space>
-          </MediaHolder>
-        </CardContent>
+          </Description>
+        </Details>
+        {!isOpen ? (
+          <UpIcon onClick={() => setIsOpen(true)} />
+        ) : (
+          <DownIcon onClick={() => setIsOpen(false)} />
+        )}
+        <MediaHolder>
+          <Space size={50}>
+            <MediaIcon image={linkedIn} iconOf="linkedIn" />
+            <MediaIcon image={github} iconOf="github" />
+          </Space>
+        </MediaHolder>
       </Card>
     </BackgroundImageStyled>
   )
@@ -74,57 +68,50 @@ const MobileHome: FC<MobileHomeType> = ({
 
 const BackgroundImageStyled = styled(BackgroundImage)`
   height: 100%;
+  display: grid;
+  justify-items: center;
+  align-items: flex-end;
+  grid-template-columns: 10vw 1fr 10vw;
+  grid-template-rows: 1fr 5vh;
 `
 
-const Card = styled(motion.div)`
-  position: absolute;
-  width: 100vw;
-  bottom: 3vh;
-`
-
-const CardContent = styled.div`
-  height: 100%;
-  width: 80vw;
-  margin: 0 auto;
+const Card = styled.div`
+  width: 100%;
+  height: fit-content;
+  grid-column: 2 / 3;
+  grid-row: 1 / 2;
   background-image: linear-gradient(
     rgba(255, 120, 0, 1),
     rgba(255, 0, 0, 0.71)
   );
   border-radius: 5px;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  padding-bottom: 10px;
+  display: grid;
+  grid-template-columns: 1fr 35px;
+  grid-template-rows: 1fr 45px;
+`
+
+const Details = styled.div`
+  grid-column: 1 / 2;
+  grid-row: 1 / 2;
 `
 const Name = styled.p`
-  padding-top: 10px;
-  padding-left: 13px;
+  padding-top: 8px;
+  padding-left: 10px;
   font-size: 5vw;
   font-family: "Rubik", sans-serif;
   color: white;
   margin: 0px;
 `
 
-const IconCol = styled(Col)`
-  text-align: right;
-  padding-right: 10px;
-  padding-top: 2px;
-`
-
-const UpIcon = styled(UpCircleOutlined)`
-  font-size: 3vw;
-`
-
-const DownIcon = styled(DownCircleOutlined)`
-  font-size: 4vw;
-`
-
 const Occupation = styled.p`
   font-family: "Poppins", sans-serif;
   font-size: 3vw;
   color: white;
-  padding-left: 14px;
+  padding-left: 12px;
 `
 
-const About = styled(motion.p)`
+const Description = styled(motion.p)`
   font-family: "Montserrat", sans-serif;
   font-size: 4vw;
   padding-left: 15px;
@@ -132,12 +119,32 @@ const About = styled(motion.p)`
   color: white;
 `
 
+const UpIcon = styled(UpCircleOutlined)`
+  font-size: 15px;
+  grid-column: 2 /3;
+  grid-row: 1 / 2;
+  padding: 9px;
+  justify-self: end;
+  height: fit-content;
+`
+
+const DownIcon = styled(DownCircleOutlined)`
+  font-size: 17px;
+  grid-column: 2 /3;
+  grid-row: 1 / 2;
+  padding: 9px;
+  justify-self: end;
+  height: fit-content;
+`
 const MediaHolder = styled.div`
-  display: flex;
-  justify-content: center;
+  grid-column: 1 / 3;
+  grid-row: 2 / 3;
+  justify-self: center;
+  padding-bottom: 10px;
 `
 
 const MediaIcon = styled(MediaImage)`
   border-radius: 50%;
 `
+
 export default MobileHome
