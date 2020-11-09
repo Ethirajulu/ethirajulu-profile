@@ -3,9 +3,9 @@ import styled from "styled-components"
 import BackgroundImage from "gatsby-background-image"
 import { DownCircleOutlined, UpCircleOutlined } from "@ant-design/icons"
 import { Space } from "antd"
+import { graphql, useStaticQuery } from "gatsby"
 import { motion } from "framer-motion"
 
-import SEO from "./seo"
 import MediaImage from "./MediaImage"
 
 type MobileHomeType = {
@@ -23,6 +23,10 @@ const MobileHome: FC<MobileHomeType> = ({
   isOpen,
   setIsOpen,
 }) => {
+  const {
+    site: { siteMetadata },
+  } = useStaticQuery(homeQuery)
+
   const aboutVariants = {
     open: {
       height: "auto",
@@ -33,21 +37,19 @@ const MobileHome: FC<MobileHomeType> = ({
       opacity: 0,
     },
   }
+
   return (
     <BackgroundImageStyled fluid={profileImg}>
-      <SEO title="Home" />
       <Card>
         <Details>
-          <Name>ETHIRAJULU SUKUMAR</Name>
-          <Occupation>Full stack developer, TN, India</Occupation>
+          <Name>{siteMetadata.name}</Name>
+          <Occupation>{siteMetadata.occupation}</Occupation>
           <Description
             animate={isOpen ? "open" : "close"}
             variants={aboutVariants}
             transition={{ duration: 0.5 }}
           >
-            I am a full stack web developer with 5+ years of experience in
-            developing high preferment and user friendly web and mobile
-            applications.
+            {siteMetadata.description}
           </Description>
         </Details>
         {!isOpen ? (
@@ -65,6 +67,18 @@ const MobileHome: FC<MobileHomeType> = ({
     </BackgroundImageStyled>
   )
 }
+
+const homeQuery = graphql`
+  query {
+    site {
+      siteMetadata {
+        name
+        occupation
+        description
+      }
+    }
+  }
+`
 
 const BackgroundImageStyled = styled(BackgroundImage)`
   height: 100%;

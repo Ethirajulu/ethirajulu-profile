@@ -5,6 +5,7 @@ import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint"
 
 import MobileHome from "../components/MobileHome"
 import DeskHome from "../components/DeskHome"
+import SEO from "../components/seo"
 
 const Home: FC<PageProps> = () => {
   const screen = useBreakpoint()
@@ -17,6 +18,7 @@ const Home: FC<PageProps> = () => {
   }
   return (
     <>
+      <SEO title="Home" />
       {screen.xs ? (
         <MobileHome
           profileImg={images.profile_pic.childImageSharp.fluid}

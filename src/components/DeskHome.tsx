@@ -2,9 +2,12 @@ import React, { FC } from "react"
 import styled from "styled-components"
 import BackgroundImage from "gatsby-background-image"
 import { DownCircleOutlined, UpCircleOutlined } from "@ant-design/icons"
-import MediaImage from "./MediaImage"
 import { Space } from "antd"
 import { motion } from "framer-motion"
+import { graphql, useStaticQuery } from "gatsby"
+import MediaImage from "./MediaImage"
+
+import { TECHS } from "../utils"
 
 type DeskHomeType = {
   profileImg: any
@@ -21,6 +24,10 @@ const DeskHome: FC<DeskHomeType> = ({
   isOpen,
   setIsOpen,
 }) => {
+  const {
+    site: { siteMetadata },
+  } = useStaticQuery(homeQuery)
+
   const descriptionVariants = {
     open: {
       height: "auto",
@@ -38,19 +45,16 @@ const DeskHome: FC<DeskHomeType> = ({
         <PicGrid>
           <BackgroundImageStyled fluid={profileImg} />
         </PicGrid>
-        <EmptyArea />
         <Card>
           <AboutContainer>
-            <Name>ETHIRAJULU SUKUMAR</Name>
-            <Occupation>Full stack developer, TN, India</Occupation>
+            <Name>{siteMetadata.name}</Name>
+            <Occupation>{siteMetadata.occupation}</Occupation>
             <Description
               animate={isOpen ? "open" : "close"}
               variants={descriptionVariants}
               transition={{ duration: 0.5 }}
             >
-              I am a full stack web developer with 5+ years of experience in
-              developing high preferment and user friendly web and mobile
-              applications.
+              {siteMetadata.description}
             </Description>
           </AboutContainer>
           {!isOpen ? (
@@ -65,10 +69,29 @@ const DeskHome: FC<DeskHomeType> = ({
             </Space>
           </MediaHolder>
         </Card>
+        <TechKnown>
+          {Object.keys(TECHS).map(tech => (
+            <TechContainer>
+              <TechItem key={tech} title={tech} src={TECHS[tech]} alt="tech" />
+            </TechContainer>
+          ))}
+        </TechKnown>
       </Content>
     </Container>
   )
 }
+
+const homeQuery = graphql`
+  query {
+    site {
+      siteMetadata {
+        name
+        occupation
+        description
+      }
+    }
+  }
+`
 
 const BackgroundImageStyled = styled(BackgroundImage)`
   height: 100%;
@@ -92,12 +115,31 @@ const PicGrid = styled.div`
   grid-row: 1 / 5;
 `
 
-const EmptyArea = styled.div`
+const TechKnown = styled.div`
   grid-column: 3 / 5;
   grid-row: 2 / 3;
   background-color: #c4c4c4;
   border-bottom-right-radius: 5px;
   border-top-right-radius: 5px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  grid-column-gap: 1vw;
+  grid-row-gap: 1vw;
+  padding: 1vw;
+`
+
+const TechContainer = styled.div`
+  width: 100%;
+  height: 100%;
+  background-color: azure;
+  display: flex;
+  justify-content: center;
+  border-radius: 5px;
+`
+
+const TechItem = styled.img`
+  width: 50%;
 `
 
 const Card = styled.div`

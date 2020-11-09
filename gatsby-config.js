@@ -5,6 +5,10 @@ module.exports = {
     author: `@ethi`,
     linkedIn: "https://www.linkedin.com/in/ethirajulu-sukumar-261723155/",
     github: "https://github.com/Ethirajulu",
+    name: "ETHIRAJULU SUKUMAR",
+    occupation: "Full stack developer, TN, India",
+    description:
+      "I am a full stack web developer with 5+ years of experience in developing high preferment and user friendly web and mobile applications.",
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
