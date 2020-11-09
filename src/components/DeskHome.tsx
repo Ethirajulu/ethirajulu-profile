@@ -71,8 +71,8 @@ const DeskHome: FC<DeskHomeType> = ({
         </Card>
         <TechKnown>
           {Object.keys(TECHS).map(tech => (
-            <TechContainer>
-              <TechItem key={tech} title={tech} src={TECHS[tech]} alt="tech" />
+            <TechContainer key={tech}>
+              <TechItem title={tech} src={TECHS[tech]} alt="tech" />
             </TechContainer>
           ))}
         </TechKnown>
@@ -122,8 +122,8 @@ const TechKnown = styled.div`
   border-bottom-right-radius: 5px;
   border-top-right-radius: 5px;
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  grid-template-rows: repeat(4, 1fr);
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(3, 1fr);
   grid-column-gap: 1vw;
   grid-row-gap: 1vw;
   padding: 1vw;
