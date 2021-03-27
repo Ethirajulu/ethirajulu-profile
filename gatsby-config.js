@@ -8,7 +8,7 @@ module.exports = {
     name: "ETHIRAJULU SUKUMAR",
     occupation: "Full stack developer, TN, India",
     description:
-      "I am a full stack developer with 5+ years of experience in developing high preferment and user friendly web and mobile applications.",
+      "I am a full stack developer with 5+ years of experience in developing high performant and user friendly web and mobile applications.",
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
